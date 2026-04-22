@@ -22,6 +22,7 @@ public class PostEntity {
     private UUID author_id;
     private String content;
     private String authorType;
+    private Integer BotReplies;
     @CreationTimestamp
     @Column(updatable=false,nullable=false)
     private LocalDateTime createdAt;
