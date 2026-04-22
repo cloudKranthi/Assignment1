@@ -23,7 +23,7 @@ public class CommentService {
     @Autowired
     public StringRedisTemplate redisTemplate;
     @Transactional
-    public  void CommetRepository(CommentEntity comment){
+    public  void CreateComment(CommentEntity comment){
         int depth=0;
         if(comment.getParentId()!=null){
             CommentEntity parentComment = commentRepository.findById(comment.getParentId()).orElse(null);

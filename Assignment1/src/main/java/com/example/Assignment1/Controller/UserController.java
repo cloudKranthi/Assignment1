@@ -1,7 +1,6 @@
 package com.example.Assignment1.Controller;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +16,12 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
     private final UserService userService;
     @PostMapping("/create")
-    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity){
+    public ResponseEntity<?> createUser(@RequestBody  UserEntity userEntity){
       try {
           userService.createUser(userEntity);
           return ResponseEntity.status(HttpStatus.CREATED).body(userEntity);
       } catch (Exception e) {
-        throw new Error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while creating User: " + e.getMessage());
       }  
     } 
 }

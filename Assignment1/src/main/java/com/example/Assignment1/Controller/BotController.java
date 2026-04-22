@@ -1,5 +1,6 @@
 package com.example.Assignment1.Controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,12 +18,12 @@ public class BotController {
     
     private final BotService botService;
     @PostMapping("/create")
-    public ResponseEntity<BotEntity> createBot(@RequestBody BotEntity botEntity){
+    public ResponseEntity<?> createBot(@RequestBody BotEntity botEntity){
       try {
           botService.createBot(botEntity);
           return ResponseEntity.status(201).body(botEntity);
       } catch (Exception e) {
-        throw new Error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while creating Bot: " + e.getMessage());
       }  
     }
 }
