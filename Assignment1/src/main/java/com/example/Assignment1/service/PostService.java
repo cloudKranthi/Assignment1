@@ -22,6 +22,8 @@ public class PostService {
         PostEntity post = postRepository.findByPostTitle(postTitle);
         String cacheKey="post:"+post.getId().toString()+":likes";
         redisTemplate.opsForValue().increment(cacheKey,1);
+        String viralityKey="post:"+post.getId().toString()+":virality_score";
+        redisTemplate.opsForValue().increment(viralityKey,50);
     }
     @Transactional
     public Integer getLikes(String PostTitle){

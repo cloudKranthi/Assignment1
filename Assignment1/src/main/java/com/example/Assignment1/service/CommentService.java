@@ -49,11 +49,11 @@ public class CommentService {
             }
         }
             else{
-                count=10;
-                System.out.println("Human comment added, increasing virality score by 10");
+                count=20;
+                System.out.println("Human comment added, increasing virality score by 20");
             }
             redisTemplate.opsForValue().increment(cacheKey,count);
-    }
+    } 
     @Scheduled(fixedRate=300000)
     public void sweep(){
        Set<String> keys=redisTemplate.keys("user:*:pending_notifs");
