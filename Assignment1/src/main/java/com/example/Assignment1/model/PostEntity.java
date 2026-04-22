@@ -27,3 +27,4 @@ public class PostEntity {
     @Column(updatable=false,nullable=false)
     private LocalDateTime createdAt;
 }
+
