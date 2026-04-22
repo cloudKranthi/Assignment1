@@ -16,6 +16,7 @@ public class BotEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private UUID id;
+    @Column(unique=true,nullable=false)
     private String name;
     @Column(columnDefinition="TEXT")
     private String description;

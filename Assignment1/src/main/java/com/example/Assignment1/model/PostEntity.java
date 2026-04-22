@@ -20,6 +20,8 @@ public class PostEntity {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private UUID id;
     private UUID author_id;
+    @Column(unique=true,nullable=false)
+    private String PostTitle;
     private String content;
     private String authorType;
     private Integer BotReplies;
