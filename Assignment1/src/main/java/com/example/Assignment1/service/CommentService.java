@@ -1,7 +1,9 @@
 package com.example.Assignment1.service;
 import java.time.Duration;
 import java.util.Set;
-
+import java.util.UUID;
+import com.example.Assignment1.Repository.PostRepository;
+import com.example.Assignment1.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Assignment1.Repository.BotRepository;
 import com.example.Assignment1.Repository.CommentRepository;
+import com.example.Assignment1.dto.CommentRequest;
 import com.example.Assignment1.model.CommentEntity;
+import com.example.Assignment1.model.PostEntity;
 @Service
 public class CommentService {
     
@@ -22,6 +26,14 @@ public class CommentService {
     public CommentRepository commentRepository;
     @Autowired
     public StringRedisTemplate redisTemplate;
+    @Autowired
+    public PostRepository postRepository;
+    @Autowired
+    public UserRepository userRepository;
+    @Autowired
+    public BotRepository botRepository;
+    @Autowired
+    public ViralityService viralityService;
     @Transactional
     public  void CreateComment(CommentEntity comment){
         int depth=0;
@@ -68,5 +80,31 @@ public class CommentService {
         }
        }
     }
+    public CommentEntity mapToEntity(CommentRequest dto) {
+    // 1. Resolve IDs from Names
+    PostEntity post = postRepository.findByPostTitle(dto.postTitle());
+     
+        
+    UUID authorId;
+    if ("USER".equalsIgnoreCase(dto.authorType())) {
+        authorId = userRepository.findByUsername(dto.authorName())
+            .orElseThrow(() -> new RuntimeException("User not found"))
+            .getId();
+    } else {
+        authorId = botRepository.findByName(dto.authorName())
+            .orElseThrow(() -> new RuntimeException("Bot not found"))
+            .getId();
+    }
+
+    
+    CommentEntity entity = new CommentEntity();
+    entity.setPostId(post.getId());
+    entity.setAuthourId(authorId);
+    entity.setAuthorType(dto.authorType());
+    entity.setContent(dto.content());
+    entity.setParentId(dto.parentId());
+    
+    return entity;
+}
     
 }

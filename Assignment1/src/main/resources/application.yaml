@@ -1,3 +1,29 @@
+server:
+  port: 8080
 spring:
   application:
     name: Assignment1
+
+  datasource:
+    # Use 'db' as the hostname because it matches your docker-compose service name
+    url: jdbc:postgresql://${DB_HOST:db}:5432/postgres_db
+    username: postgres
+    password: Shiva@37
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      # Use 'localhost' if running the app outside Docker, 
+      # Change to 'redis' if you containerize the Spring Boot app later.
+      host: ${REDIS_HOST:redis}
+      port: 6379
+
+# Custom configuration for your Global Exception Handler logic

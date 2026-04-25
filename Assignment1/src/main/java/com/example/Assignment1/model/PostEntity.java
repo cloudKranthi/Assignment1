@@ -1,14 +1,15 @@
 package com.example.Assignment1.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import java.time.LocalDateTime;
 import jakarta.persistence.Id;
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,9 +20,9 @@ public class PostEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private UUID id;
-    private UUID author_id;
+    private UUID authorId;
     @Column(unique=true,nullable=false)
-    private String PostTitle;
+    private String postTitle;
     private String content;
     private String authorType;
     private Integer BotReplies;

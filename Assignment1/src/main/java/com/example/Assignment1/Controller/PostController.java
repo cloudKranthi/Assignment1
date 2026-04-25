@@ -1,7 +1,7 @@
 package com.example.Assignment1.Controller;
 
 import java.util.UUID;
-
+import com.example.Assignment1.dto.CommentRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +40,7 @@ public class PostController {
     @PostMapping("/post/like")
     public ResponseEntity<String> likePost(@RequestHeader UUID postId){
        try {
-        PostEntity post=PostRepository.findById(postId).orElseThrow(()->new Exception("Post not found"));
+        PostEntity post=PostRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
         postService.updateLikes(post.getPostTitle());
         return ResponseEntity.ok("Post liked successfully");
        } catch (Exception e) {
@@ -57,9 +57,10 @@ public class PostController {
        }
     }
     @PostMapping("/posts/comments")
-    public ResponseEntity<String> createComment(@RequestHeader UUID postId,@RequestBody CommentEntity comment){
+    public ResponseEntity<String> createComment(@RequestHeader UUID postId,@RequestBody CommentRequest request){
         try {
-            commentService.CreateComment(comment);
+            CommentEntity createdComment=commentService.mapToEntity(request);
+            commentService.CreateComment(createdComment);
             return ResponseEntity.status(HttpStatus.CREATED).body("Comment created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating comment");

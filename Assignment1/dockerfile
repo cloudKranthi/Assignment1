@@ -1,0 +1,11 @@
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+COPY . .
+# We run the build and then LIST the files to prove it exists
+RUN mvn clean package -DskipTests && ls -R target/
+
+FROM eclipse-temurin:21-alpine
+WORKDIR /app
+# If this fails, the JAR was never built
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
