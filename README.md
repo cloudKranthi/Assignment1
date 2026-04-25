@@ -1,4 +1,4 @@
-# Core API & Guardrails System 🛡️
+# Core API & Guardrails System 
 
 A high-performance, stateless Spring Boot 3 microservice built as a central API gateway with Redis-powered guardrails for concurrency control, real-time scoring, and scheduled notifications.
 
@@ -6,7 +6,7 @@ This project was designed to handle high-concurrency scenarios, protect system l
 
 ---
 
-# 🚀 Tech Stack
+#  Tech Stack
 
 - Java 21  
 - Spring Boot 3  
@@ -17,7 +17,7 @@ This project was designed to handle high-concurrency scenarios, protect system l
 
 ---
 
-# 🏗️ System Architecture
+#  System Architecture
 
 The application follows a stateless backend design:
 
@@ -28,7 +28,7 @@ The application follows a stateless backend design:
 
 ---
 
-# 🛠️ Key Features
+#  Key Features
 
 ## 1. Atomic Guardrails (Concurrency Protection)
 
@@ -89,7 +89,7 @@ This improves:
 
 ---
 
-# 📌 API Endpoints
+#  API Endpoints
 
 ## Posts
 
@@ -108,7 +108,7 @@ This improves:
 
 ---
 
-# 📦 Run Locally
+#  Run Locally
 
 ```bash
 docker compose up --build -d
